@@ -1,12 +1,16 @@
 import { Navbar } from "../components/navbar";
 
+import css from "../styles/page.module.css";
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
       <head />
       <body>
-        <Navbar />
-        <main>{children}</main>
+        <div className={css.page}>
+          <Navbar />
+          <main>{children}</main>
+        </div>
       </body>
     </html>
   );

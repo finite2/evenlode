@@ -11,8 +11,8 @@ export const NavButton = ({ href, children }) => {
   const isSelected = (pathname.startsWith(href) && href.length > 2) || pathname === href;
 
   return (
-    <div className={classes(css.navbutton, isSelected ? css.selected : undefined)}>
-      <Link href={href}>{children}</Link>
-    </div>
+    <Link href={href} className={classes(css.navbutton, isSelected ? css.selected : undefined)}>
+      {children}
+    </Link>
   );
 };

@@ -22,12 +22,18 @@
 
 .nav {
   display: grid;
+  position: relative;
+  width: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 50px;
 
   border-radius: 10px 10px 0 0;
 
-  border: 1px solid var(--color-nav-border);
+  border: 2px solid var(--color-nav-border);
+
+  background: var(--color-nav-border);
+
+  grid-gap: 2px;
 
   overflow: hidden;
 }
@@ -43,14 +49,10 @@
   align-items: center;
   
   background: var(--color-inactive);
-  border: 1px solid var(--color-nav-border);
 }
 
-.navbutton.selected {
+a.navbutton.selected {
   background: var(--color-primary);
-  
-}
-
-.navbutton.selected a {
   color: white;
+  
 }

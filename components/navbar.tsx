@@ -4,7 +4,7 @@ import { NavButton } from "./nav-button";
 
 export const Navbar = () => {
   return (
-    <>
+    <div className={css.header}>
       <div className={css.logorow}>
         <div className={css.logo}>
           <Image
@@ -23,8 +23,7 @@ export const Navbar = () => {
         <NavButton href="/juniors">Juniors</NavButton>
         <NavButton href="/contact-us">Contact us</NavButton>
       </nav>
-
       <div className={css.navbottom} />
-    </>
+    </div>
   );
 };
