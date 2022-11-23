@@ -7,6 +7,14 @@ import prisma from "../../../lib/prisma";
 export default NextAuth({
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    async session({ session, token, user }) {
+      console.log(session, token, user);
+      session.user.role = user.role;
+      session.user.committeeTitle = user.committeeTitle;
+      return session;
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,

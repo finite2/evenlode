@@ -1,8 +1,6 @@
-import "./globals.css";
-
 import { externalLinks } from "../config/external-links";
 
-export default function Index() {
+const HomePage = () => {
   return (
     <>
       <h1>Welcome to the Evenlode Badminton Club Website</h1>
@@ -25,4 +23,6 @@ export default function Index() {
       </p>
     </>
   );
-}
+};
+
+export default HomePage;

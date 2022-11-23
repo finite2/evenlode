@@ -23,11 +23,10 @@
 
 
 .nav {
-  display: grid;
+  display: flex;
   position: relative;
   width: 100%;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 50px;
+  height: 50px;
 
   border-radius: var(--nav-border-radius) var(--nav-border-radius) 0 0;
 

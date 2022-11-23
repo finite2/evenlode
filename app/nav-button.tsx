@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import css from "./navbar.module.css";
 import { classes } from "../components/utils";
+import { useSession } from "next-auth/react";
 
 export const NavButton = ({ href, children }) => {
   const pathname = usePathname();
@@ -15,4 +16,14 @@ export const NavButton = ({ href, children }) => {
       {children}
     </Link>
   );
+};
+
+export const MyAccountLink = () => {
+  const { data: user } = useSession();
+
+  if (user) {
+
+    return <NavButton href="/users/me">My account</NavButton>;
+  }
+  return null;
 };

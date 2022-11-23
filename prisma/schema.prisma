@@ -35,14 +35,23 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  articles      Article[]
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  role           Role      @default(VISITOR)
+  committeeTitle String?   @db.VarChar(80)
+  accounts       Account[]
+  sessions       Session[]
+  articles       Article[]
+}
+
+enum Role {
+  VISITOR
+  MEMBER
+  CAPTAIN
+  ADMIN
 }
 
 model VerificationToken {

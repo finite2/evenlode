@@ -1,15 +1,16 @@
 import Image from "next/image";
+import Link from "next/link";
 import css from "./navbar.module.css";
-import { NavButton } from "./nav-button";
+import { MyAccountLink, NavButton } from "./nav-button";
 import { Login } from "./login";
 
 export const Navbar = () => {
   return (
     <div className={css.header}>
       <div className={css.logorow}>
-        <div className={css.logo}>
+        <Link href="/" className={css.logo}>
           <Image src="/images/EvenlodeBadmintonLogo.png" alt="Evenlode Badminton Club logo" fill />
-        </div>
+        </Link>
         <Login />
       </div>
       <nav className={css.nav}>
@@ -18,6 +19,7 @@ export const Navbar = () => {
         <NavButton href="/membership">Membership</NavButton>
         <NavButton href="/juniors">Juniors</NavButton>
         <NavButton href="/contact-us">Contact us</NavButton>
+        <MyAccountLink />
       </nav>
       <div className={css.navbottom} />
     </div>

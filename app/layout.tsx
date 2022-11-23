@@ -1,3 +1,5 @@
+import "./globals.css";
+
 import { Navbar } from "./navbar";
 
 import css from "./layout.module.css";
