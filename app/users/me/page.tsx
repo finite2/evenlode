@@ -5,8 +5,6 @@ import { useSession } from "next-auth/react";
 const MyAccountPage = ({}) => {
   const { data } = useSession();
 
-  console.log(data);
-
   if (!data?.user) {
     return <h3>You are not currently logged in.</h3>;
   }
