@@ -1,20 +1,16 @@
 import Image from "next/image";
-import css from "../styles/navbar.module.css";
+import css from "./navbar.module.css";
 import { NavButton } from "./nav-button";
+import { Login } from "./login";
 
 export const Navbar = () => {
   return (
     <div className={css.header}>
       <div className={css.logorow}>
         <div className={css.logo}>
-          <Image
-            src="/images/EvenlodeBadmintonLogo.png"
-            alt="Evenlode Badminton Club logo"
-            fill
-            objectFit="contain"
-          />
+          <Image src="/images/EvenlodeBadmintonLogo.png" alt="Evenlode Badminton Club logo" fill />
         </div>
-        <div>Login</div>
+        <Login />
       </div>
       <nav className={css.nav}>
         <NavButton href="/">Home</NavButton>

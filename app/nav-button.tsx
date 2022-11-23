@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import css from "../styles/navbar.module.css";
-import { classes } from "./utils";
+import css from "./navbar.module.css";
+import { classes } from "../components/utils";
 
 export const NavButton = ({ href, children }) => {
   const pathname = usePathname();

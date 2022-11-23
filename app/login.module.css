@@ -1,0 +1,39 @@
+
+
+
+
+
+
+.login {
+  width: 120px;
+  height: 50px;
+
+  border: 2px solid var(--color-nav-border);
+  border-radius: var(--nav-border-radius);
+
+  background: var(--color-primary);
+  color: var(--color-text-primary);
+  font-size: 1.2em;
+
+  cursor: pointer;
+
+}
+
+.login:hover {
+  background: var(--color-primary-interact);
+}
+
+.logout {
+  width: 80px;
+  height: 25px;
+
+  border: 2px solid var(--color-nav-border);
+  border-radius: var(--nav-border-radius);
+
+  background: var(--color-inactive);
+}
+
+.logout:hover {
+  background: var(--color-inactive-interact);
+
+}
