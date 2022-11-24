@@ -1,0 +1,9 @@
+
+
+
+.horizontalLine {
+  margin: var(--margin);
+  height: 4px;
+  background: var(--color-text);
+  box-sizing: bounding-box;
+}

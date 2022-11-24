@@ -4,6 +4,7 @@ import { Navbar } from "./navbar";
 
 import css from "./layout.module.css";
 import AuthContext from "./auth-context";
+import { Suspense } from "react";
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,7 +14,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <AuthContext>
           <div className={css.page}>
             <Navbar />
-            <main>{children}</main>
+            <main>
+              <Suspense>{children}</Suspense>
+            </main>
           </div>
         </AuthContext>
       </body>
