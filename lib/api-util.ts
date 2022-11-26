@@ -22,6 +22,7 @@ export class ApiError {
 
 export const response = {
   json: (res: NextApiResponse, payload: any) => res.status(200).json({ data: payload }),
+  ok: (res: NextApiResponse) => res.status(200).end(),
 };
 
 export const error = {

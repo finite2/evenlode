@@ -4,67 +4,72 @@ import { z } from "zod";
 import { auth, catchErrorMiddleware, error, response } from "../../../lib/api-util";
 import prisma from "../../../lib/prisma";
 
+const articleIDHandler = (req: NextApiRequest, res: NextApiResponse) => {
+  switch (req.method) {
+    case "GET":
+      return getArticle(req, res);
+    case "PUT":
+      return updateArticle(req, res);
+    case "DELETE":
+      return deleteArticle(req, res);
+    default:
+      return error.methodNotAllowed(req);
+  }
+};
+
+export default catchErrorMiddleware(articleIDHandler);
+
+const getArticle = async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = parseInt(req.query.id as string);
+
+  const article = await prisma.article.findUnique({ where: { id } });
+
+  if (!article) throw error.objectNotFound404();
+
+  return response.json(res, article);
+};
+
 const updateArticleSchema = z.object({
   body: z.object({
     isClubMessage: z.boolean().optional().default(true),
     title: z.string({ required_error: "title is a required field" }),
     body: z.string({ required_error: "body is a required field" }),
   }),
-  // query: z.object({
-  //   id: z.preprocess((a) => parseInt(a as string), z.number()),
-  // }),
+  query: z.object({
+    id: z.preprocess((a) => parseInt(a as string), z.number()),
+  }),
 });
 
-const articleIDHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  const id = parseInt(req.query.id as string);
+const updateArticle = async (req: NextApiRequest, res: NextApiResponse) => {
+  const {
+    body,
+    query: { id },
+  } = updateArticleSchema.parse(req);
 
-  switch (req.method) {
-    case "GET":
-      return getArticle();
-    case "PUT":
-      return updateArticle();
-    case "DELETE":
-      return deleteArticle();
-    default:
-      return error.methodNotAllowed(req);
-  }
+  const article = await prisma.article.findUnique({ where: { id } });
 
-  async function getArticle() {
-    const article = await prisma.article.findUnique({ where: { id } });
+  await auth.isAdminOrOwner(req, article?.userId);
 
-    if (!article) throw error.objectNotFound404();
+  if (!article) throw error.objectNotFound404();
 
-    return res.status(200).json(article);
-  }
+  const updatedArticle = await prisma.article.update({
+    data: body,
+    where: { id },
+  });
 
-  async function updateArticle() {
-    const { body } = updateArticleSchema.parse(req);
-
-    const article = await prisma.article.findUnique({ where: { id } });
-
-    await auth.isAdminOrOwner(req, article?.userId);
-
-    if (!article) throw error.objectNotFound404();
-
-    const updatedArticle = await prisma.article.update({
-      data: body,
-      where: { id },
-    });
-
-    return response.json(res, updatedArticle);
-  }
-
-  async function deleteArticle() {
-    const article = await prisma.article.findUnique({ where: { id } });
-
-    await auth.isAdminOrOwner(req, article?.userId);
-
-    if (!article) throw error.objectNotFound404();
-
-    await prisma.article.delete({ where: { id } });
-
-    return res.status(200).end();
-  }
+  return response.json(res, updatedArticle);
 };
 
-export default catchErrorMiddleware(articleIDHandler);
+const deleteArticle = async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = parseInt(req.query.id as string);
+
+  const article = await prisma.article.findUnique({ where: { id } });
+
+  await auth.isAdminOrOwner(req, article?.userId);
+
+  if (!article) throw error.objectNotFound404();
+
+  await prisma.article.delete({ where: { id } });
+
+  return response.ok(res);
+};
