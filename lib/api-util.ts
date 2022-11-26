@@ -110,18 +110,13 @@ export const catchErrorMiddleware =
         res.status(400).json({
           error: {
             status: 400,
-            error: "invalid request",
-            message: error.issues.map((m) => m.message).join("\n"),
+            error: "Invalid request",
+            message: "Request does not match endpoint schema",
+            detail: error,
           },
         });
       } else if (error instanceof ApiError) {
-        res.status(error.status).json({
-          error: {
-            status: error.status,
-            type: error.type,
-            message: error.message,
-          },
-        });
+        res.status(error.status).json({ error });
       } else {
         throw error;
       }

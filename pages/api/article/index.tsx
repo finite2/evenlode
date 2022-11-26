@@ -32,8 +32,8 @@ const listArticles = async (req: NextApiRequest, res: NextApiResponse) => {
 const postArticleSchema = z.object({
   body: z.object({
     isClubMessage: z.boolean().optional().default(true),
-    title: z.string({ required_error: "title is a required field" }),
-    body: z.string({ required_error: "body is a required field" }),
+    title: z.string(),
+    body: z.string(),
   }),
 });
 
