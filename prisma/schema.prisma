@@ -67,7 +67,7 @@ model VerificationToken {
 model Article {
   id            Int      @id @default(autoincrement())
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   userId        String
   isClubMessage Boolean  @default(false)
   title         String
