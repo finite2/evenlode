@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { z } from "zod";
 
 import { auth, catchErrorMiddleware, error, response } from "../../../lib/api-util";
-import prisma from "../../../lib/prisma";
+import * as apiArticle from "../../../prisma/api-article";
 
 const articleHandler = (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -18,36 +17,17 @@ const articleHandler = (req: NextApiRequest, res: NextApiResponse) => {
 export default catchErrorMiddleware(articleHandler);
 
 const listArticles = async (req: NextApiRequest, res: NextApiResponse) => {
-  const articles = await prisma.article.findMany({
-    where: {
-      isClubMessage: true,
-    },
-    orderBy: { createdAt: "asc" },
-    take: 5,
-  });
+  const articles = await apiArticle.listArticles();
 
   return response.json(res, articles);
 };
 
-const postArticleSchema = z.object({
-  body: z.object({
-    isClubMessage: z.boolean().optional().default(true),
-    title: z.string(),
-    body: z.string(),
-  }),
-});
-
 const createArticle = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await auth.isAdmin(req);
 
-  const { body } = postArticleSchema.parse(req);
+  const body = apiArticle.postArticleSchema.parse(req.body);
 
-  const article = await prisma.article.create({
-    data: {
-      ...body,
-      user: { connect: { id: session.user.id } },
-    },
-  });
+  const article = await apiArticle.createArticle(session.user.id, body);
 
   return response.json(res, article);
 };

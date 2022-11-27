@@ -1,20 +1,11 @@
-import { Article } from "@prisma/client";
-
 import { RenderArticle } from "../components/Article";
 import { HorizontalLine } from "../components/horizontal-line";
 
 import { externalLinks } from "../config/external-links";
-
-import prisma from "../lib/prisma";
+import { listArticles } from "../prisma/api-article";
 
 const HomePage = async () => {
-  const articles: Article[] = await prisma.article.findMany({
-    where: {
-      isClubMessage: true,
-    },
-    orderBy: { createdAt: "asc" },
-    take: 5,
-  });
+  const articles = await listArticles();
 
   return (
     <>
